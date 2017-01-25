@@ -1,13 +1,10 @@
 package data
 
 import (
-	"testing"
-
 	"bytes"
 	"strconv"
-
 	"strings"
-
+	"testing"
 	"time"
 
 	. "github.com/smartystreets/goconvey/convey"
