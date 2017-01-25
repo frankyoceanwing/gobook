@@ -55,7 +55,7 @@ func runIntsToString(fn intsToStringFunc) (string, float64) {
 	return s, time.Since(start).Seconds()
 }
 
-func TestBytesBuffer(t *testing.T) {
+func TestIntsToString(t *testing.T) {
 	s1, t1 := runIntsToString(intsToString)
 	s2, t2 := runIntsToString(intsToStringWithBuffer)
 	s3, t3 := runIntsToString(intsToStringWithJoin)
