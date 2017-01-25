@@ -2,6 +2,7 @@ package data
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 	"strings"
 	"testing"
@@ -45,8 +46,8 @@ func intsToStringWithBuffer(ints []int) string {
 	return buf.String()
 }
 
-func runIntsToString(fn intsToStringFunc) (string, float64) {
-	ints := make([]int, 100000)
+func runIntsToString(n int, fn intsToStringFunc) (string, float64) {
+	ints := make([]int, n)
 	for i := range ints {
 		ints[i] = i + 1
 	}
@@ -56,9 +57,13 @@ func runIntsToString(fn intsToStringFunc) (string, float64) {
 }
 
 func TestIntsToString(t *testing.T) {
-	s1, t1 := runIntsToString(intsToString)
-	s2, t2 := runIntsToString(intsToStringWithBuffer)
-	s3, t3 := runIntsToString(intsToStringWithJoin)
+	n := 10000
+	s1, t1 := runIntsToString(n, intsToString)
+	s2, t2 := runIntsToString(n, intsToStringWithBuffer)
+	s3, t3 := runIntsToString(n, intsToStringWithJoin)
+	fmt.Printf("'+'          * %d : %.6fs\n", n, t1)
+	fmt.Printf("bytes.Buffer * %d : %.6fs\n", n, t2)
+	fmt.Printf("strings.Join * %d : %.6fs\n", n, t3)
 
 	Convey("Test string concatenation", t, func() {
 

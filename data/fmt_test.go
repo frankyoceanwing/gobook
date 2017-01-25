@@ -24,23 +24,27 @@ func convInt(i int) string {
 	return strconv.Itoa(i)
 }
 
-func runIntToStr(fn intToStrFunc) float64 {
+func runIntToStr(n int, fn intToStrFunc) float64 {
 	start := time.Now()
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < n; i++ {
 		fn(i)
 	}
 	return time.Since(start).Seconds()
 }
 
 func TestIntToStr(t *testing.T) {
-	t1 := runIntToStr(fmtInt)
-	t2 := runIntToStr(fmtfInt)
-	t3 := runIntToStr(convInt)
+	n := 10000
+	t1 := runIntToStr(n, fmtInt)
+	t2 := runIntToStr(n, fmtfInt)
+	t3 := runIntToStr(n, convInt)
+	fmt.Printf("fmt.Sprint   * %d : %.6fs\n", n, t1)
+	fmt.Printf("fmt.Sprintf  * %d : %.6fs\n", n, t2)
+	fmt.Printf("strconv.Itoa * %d : %.6fs\n", n, t3)
 
 	Convey("Test string conversion", t, func() {
 
-		Convey("fmt.Sprintf is faster than fmt.Sprint", func() {
-			So(t2, ShouldBeLessThan, t1)
+		Convey("there is not much different between fmt.Sprint and fmt.Sprintf", func() {
+			So(t2, ShouldAlmostEqual, t1, 0.01)
 		})
 
 		Convey("strconv.Itoa is the fastest one", func() {
