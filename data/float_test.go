@@ -15,7 +15,7 @@ func TestFloatCompare(t *testing.T) {
 			So(a == b, ShouldBeTrue)
 		})
 
-		Convey("When b's type is float32 ", func() {
+		Convey("When b's type is float32", func() {
 			var b float32 = 0.1
 			So(a == float64(b), ShouldBeFalse)
 		})
